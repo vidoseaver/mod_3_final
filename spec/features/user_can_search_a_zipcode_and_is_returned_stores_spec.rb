@@ -3,25 +3,25 @@ require 'rails_helper'
 feature "user visits root" do
   describe "enters a zip code in the search bar and clicks search" do
     it "shows stores within 25 miles of that zip code" do
+      VCR.use_cassette "feauture_1" do
+        visit root_path
 
-      visit root_path
+        fill_in "zipcode", with: "80202"
+        click_on "Search"
 
-      fill_in "zipcode", with: "80202"
-      click "search"
+        expect(current_path).to eq("/search")
 
-      expect(current_path).to eq("/search")
+        within("#total")do
+          expect(page).to have_content("16 Total Stores")
+        end
 
-      within("#total")do
-        expect(page).to have_content("16 Total Stores")
-      end
-
-      within("#stores") do
-        within("tr.second")do
-        expect(page).to have content("Best Buy Mobile - Cherry Creek Shopping Center")
-        expect(page).to have content("Denver")
-        expect(page).to have content(3.25)
-        expect(page).to have content("303-270-9189")
-
+        within("#stores") do
+          within("tr:nth-child(2)")do
+            expect(page).to have_content("Best Buy Mobile - Cherry Creek Shopping Center")
+            expect(page).to have_content("Denver")
+            expect(page).to have_content(3.25)
+            expect(page).to have_content("303-270-9189")
+          end
         end
       end
     end
