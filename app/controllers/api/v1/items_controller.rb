@@ -11,6 +11,13 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def destroy
+    binding.pry
+    item = Item.find(item_id)
+    if item.destroy
+      render json: "success"
+    else
+      render 404
+    end
   end
 
   private
@@ -20,5 +27,9 @@ class Api::V1::ItemsController < ApplicationController
 
     def item_id
       strong_params["id"].to_i
+    end
+
+    def permitted_id
+      params.require(:delete).permit(:id)
     end
 end
