@@ -4,6 +4,7 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def show
+    render json: Item.find(item_id)
   end
 
   def create
@@ -11,4 +12,13 @@ class Api::V1::ItemsController < ApplicationController
 
   def delete
   end
+
+  private
+    def strong_params
+      params.permit(:id)
+    end
+
+    def item_id
+      strong_params["id"].to_i
+    end
 end
