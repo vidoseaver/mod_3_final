@@ -8,10 +8,10 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def create
+    Item
   end
 
   def destroy
-    binding.pry
     item = Item.find(item_id)
     if item.destroy
       render json: "success"
@@ -31,5 +31,9 @@ class Api::V1::ItemsController < ApplicationController
 
     def permitted_id
       params.require(:delete).permit(:id)
+    end
+
+    def item_attributes
+      params.require(:post).permit(:name,:description,:image_url)
     end
 end
