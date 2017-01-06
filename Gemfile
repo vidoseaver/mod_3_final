@@ -14,7 +14,6 @@ gem "less-rails-bootstrap"
 gem "minitest-rails"
 gem 'figaro'
 gem 'faraday'
-gem 'rack-cors'
 
 group :development do
   gem "spring"
