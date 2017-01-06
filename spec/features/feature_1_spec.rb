@@ -3,9 +3,21 @@ require 'rails_helper'
 feature "user visits root" do
   describe "enters a zip code in the search bar and clicks search" do
     it "shows stores within 25 miles of that zip code" do
+
       visit root
 
-      fill_in :zipcode, with 
+      fill_in "search", with: "80202"
+      click "search"
+
+      expect(current_path).to eq("/search")
+      within("#stores") do
+        within("#total")do
+          expect(page).to have_content("16 Total Stores")
+        end
+        within(".single-store")do
+          expect()
+        end
+      end
     end
   end
 end # As a user
