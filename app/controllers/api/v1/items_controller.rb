@@ -1,4 +1,5 @@
 class Api::V1::ItemsController < ApplicationController
+
   def index
     render json: Item.all
   end
@@ -8,7 +9,12 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def create
-    Item
+    item =  Item.new(item_attributes)
+    if item.save
+      render json: item
+    else
+      render 404
+    end
   end
 
   def destroy
